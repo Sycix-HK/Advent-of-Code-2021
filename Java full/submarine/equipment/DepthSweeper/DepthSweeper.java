@@ -1,4 +1,4 @@
-package submarine.equipment.depthSweeper;
+package submarine.equipment.DepthSweeper;
 
 import java.io.File;
 
