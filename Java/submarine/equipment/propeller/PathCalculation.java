@@ -11,6 +11,7 @@ enum Direction {
 public class PathCalculation {
     private int depth = 0;
     private int horizontal = 0;
+    private int aim = 0;
     private ArrayList<Instruction> instructions = new ArrayList<>();
 
     public int getDepth() {return depth; }
@@ -26,11 +27,9 @@ public class PathCalculation {
                 Integer.parseInt(splitline[1])
             ));
         }
-
-        EvaulateInstructions();
     }
 
-    public void EvaulateInstructions()
+    public void evaulateSimple()
     {
         for (Instruction ins : instructions) {
             switch (ins.dir)
@@ -49,7 +48,36 @@ public class PathCalculation {
             }
         }
     }
+
+    public void evaulateAdvanced()
+    {
+        for (Instruction ins : instructions) {
+            switch (ins.dir)
+            {
+                case forward:
+                    horizontal += ins.units;
+                    depth += aim*ins.units;
+                    break;
+                case up:
+                    aim -= ins.units;
+                    break;
+                case down:
+                    aim += ins.units;
+                    break;
+                default:
+                    throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    public void resetPosition()
+    {
+        depth = 0;
+        horizontal = 0;
+        aim = 0;
+    }
 }
+
 
 class Instruction {
     public Direction dir;
