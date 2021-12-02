@@ -2,7 +2,7 @@
 
 ---
 
-* [Day 01](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java%20full/submarine/equipment/DepthSweeper) <sup>⭐</sup>
+* [Day 01](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java%20full/submarine/equipment/DepthSweeper) <span style="color:yellow">*</span>
 
 ---
 by Sycix
