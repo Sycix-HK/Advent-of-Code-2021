@@ -2,7 +2,6 @@ import java.util.*;
 import java.io.*;
 
 public class DepthSweeper {
-
     public static void main(String[] args) {
         int solution = 0;
         try (Scanner in = new Scanner(new FileReader(new File("input.txt"))))
@@ -14,9 +13,7 @@ public class DepthSweeper {
             }
             in.close();
         }catch (IOException e){
-            System.err.println(e);
         }
         System.out.println(solution);
     }
-
 }
