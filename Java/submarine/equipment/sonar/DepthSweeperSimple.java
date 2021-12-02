@@ -1,4 +1,4 @@
-package submarine.equipment.radar;
+package submarine.equipment.sonar;
 
 import java.io.*;
 import java.util.Scanner;
