@@ -1,12 +1,10 @@
-package submarine.equipment.depthSweeper;
+package submarine.equipment.radar;
 
 import java.io.*;
 import java.util.Scanner;
 
-public class DepthSweeperSimple implements DepthSweeper{
-
-    @Override
-    public int Sweep(File f)
+public class DepthSweeperSimple{
+    public static int Sweep(File f)
     {
         int solution = 0;
 
@@ -18,7 +16,8 @@ public class DepthSweeperSimple implements DepthSweeper{
                 solution = (depth < (depth = Integer.parseInt(in.nextLine()))) ? solution + 1 : solution;
             }
             in.close();
-        }catch (IOException e){}
+        }
+        catch (IOException e){}
 
         return solution;
     }

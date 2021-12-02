@@ -1,12 +1,10 @@
-package submarine.equipment.depthSweeper;
+package submarine.equipment.radar;
 
 import java.io.*;
 import java.util.*;
 
-public class DepthSweeperAdvanced implements DepthSweeper{
-
-    @Override
-    public int Sweep(File input) {
+public class DepthSweeperAdvanced{
+    public static int Sweep(File input) {
         List<Integer> scan = new submarine.core.InputScanner<Integer>(input).getResult();
         
         // denoise
@@ -22,5 +20,4 @@ public class DepthSweeperAdvanced implements DepthSweeper{
 
         return c;
     }
-    
 }
