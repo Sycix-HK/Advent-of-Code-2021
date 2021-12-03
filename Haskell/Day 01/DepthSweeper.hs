@@ -1,3 +1,5 @@
+-- Assuming input comes as [Integer]
+
 -- Part 1
 depthSweeper :: [Integer] -> Int
 depthSweeper input = sum $ zipWith (\x a -> if x < a then 1 else 0) input (tail input)
