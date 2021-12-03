@@ -7,4 +7,8 @@ public class DataTray {
     {
         return new File("data/Day "+((day < 10)?"0"+day:day)+"/input.txt");
     }
+    public static File getTest(int day)
+    {
+        return new File("data/Day "+((day < 10)?"0"+day:day)+"/test.txt");
+    }
 }
