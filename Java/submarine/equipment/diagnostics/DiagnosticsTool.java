@@ -49,7 +49,7 @@ public abstract class DiagnosticsTool {
             dataRaw.removeIf(line -> line.charAt(index) == (dominantBit?'0':'1'));
             if (dataRaw.size() == 1) break;
         }
-        if (dataRaw.size() != 1) throw new RuntimeException("data size not equal to 1");
+        if (dataRaw.size() != 1) throw new RuntimeException("data size ("+ dataRaw.size() +") must equal to 1");
         int rating = 0;
         for (int i = 0; i < bitSize; i++)
         {
