@@ -8,7 +8,7 @@ calculatePathProductSimple input = (sum [x | (Forward x) <- input]) * ((sum [x |
 
 -- Part 2's ghost
 --calculatePathAdvanced :: [Direction] -> Int -> (Int,Int)
---calculatePathAdvanced ((Forward x):xs) aim =  ()
---calculatePathAdvanced ((Up x):xs)      aim =  
---calculatePathAdvanced ((Down x):xs)    aim =  
+--calculatePathAdvanced ((Forward x):xs) aim = calculatePathAdvanced xs aim
+--calculatePathAdvanced ((Up x):xs)      aim = calculatePathAdvanced xs
+--calculatePathAdvanced ((Down x):xs)    aim = calculatePathAdvanced xs
 --calculatePathAdvanced     _             _  = (0,0)
