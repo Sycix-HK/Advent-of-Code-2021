@@ -1,12 +1,10 @@
 package submarine.equipment.sonar;
 
-import java.io.*;
+import submarine.core.DataTray;
 
 public class DepthSweeperMain {
     public static void main(String[] args) {
-        File input = new File("data/Day 01/input.txt");
-
-        System.out.println("Simple scan: "+ DepthSweeperSimple.Sweep(input));
-        System.out.println("Denoised scan: "+ DepthSweeperAdvanced.Sweep(input));
+        System.out.println("Simple scan: "+ DepthSweeperSimple.Sweep(DataTray.getInput(1)));
+        System.out.println("Denoised scan: "+ DepthSweeperAdvanced.Sweep(DataTray.getInput(1)));
     }
 }
