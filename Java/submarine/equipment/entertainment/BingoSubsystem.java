@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 public class BingoSubsystem {
     public static void main(String[] args) {
         System.out.println("Winner board has "+getWinner(DataTray.getInput(4)).getScore()+" points");
+        System.out.println("Last winning board has "+getLastWinning(DataTray.getInput(4)).getScore()+" points");
     }
     public static Board getWinner(File file)
     {
@@ -19,6 +20,16 @@ public class BingoSubsystem {
             states.add( board.winsAt(game.draws) );
         }
         return game.boards.get(states.indexOf(Collections.min(states)));
+    }
+    public static Board getLastWinning(File file)
+    {
+        Game game = new Game(file); 
+        ArrayList<Integer> states = new ArrayList<>();
+        for (Board board : game.boards)
+        {
+            states.add( board.winsAt(game.draws) );
+        }
+        return game.boards.get(states.indexOf(Collections.max(states)));
     }
 }
 class Game 
