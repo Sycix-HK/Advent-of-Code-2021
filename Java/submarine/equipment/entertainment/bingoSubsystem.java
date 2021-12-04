@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class bingoSubsystem {
+public class BingoSubsystem {
     public static void main(String[] args) {
         System.out.println("Winner board has "+getWinner(DataTray.getInput(4)).getScore()+" points");
     }
