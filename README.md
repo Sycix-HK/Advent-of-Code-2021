@@ -1,8 +1,8 @@
 # Advent of Code 2021
 ---
 ## [Java](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java)
-My aim with Java is to dive into the lore and build a submarine that is equipped for puzzle solving
-## Calendar
+My aim with Java is to dive into the lore and **build a submarine** that is equipped for puzzle solving
+## Calendar for [Java](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java)
 | Mon | Tue | Wed | Thu | Fri | Sat | Sun |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |     |     | [Day 01](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java/submarine/equipment/sonar)<br>🌟🌟 | [Day 02](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java/submarine/equipment/propeller)<br>🌟🌟 | [Day 03](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java/submarine/equipment/diagnostics)<br>🌟🌟 | [Day 04](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java/submarine/equipment/entertainment)<br>🌟🌟 | [Day 05](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java/submarine/equipment/sonar)<br>🌟🌟 |
