@@ -13,8 +13,8 @@ import submarine.equipment.sonar.Bathymetry.BathymetryMapType;
 
 public class HydrothermalVentMapper {
     public static void main(String[] args) {
-        System.out.println("Danger zones with linear            data: " + scanForVents(DataTray.getInput(5), BathymetryMapType.linear).dangerZones);
-        System.out.println("Danger zones with linear + diagonal data: " + scanForVents(DataTray.getInput(5), BathymetryMapType.diagonal).dangerZones);
+        System.out.println("Danger zones with orthogonal            data: " + scanForVents(DataTray.getInput(5), BathymetryMapType.orthogonal).dangerZones);
+        System.out.println("Danger zones with orthogonal + diagonal data: " + scanForVents(DataTray.getInput(5), BathymetryMapType.diagonal).dangerZones);
     }
     
     public static Bathymetry scanForVents(File file, BathymetryMapType mapType)
@@ -70,7 +70,7 @@ class Bathymetry
 {
     public enum BathymetryMapType 
     {
-        linear, diagonal
+        orthogonal, diagonal
     }
     public int[][] map = new int[1000][1000];
     public int dangerZones = 0;
