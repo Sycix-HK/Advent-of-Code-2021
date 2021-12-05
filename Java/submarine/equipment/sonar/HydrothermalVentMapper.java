@@ -11,11 +11,16 @@ import java.util.regex.*;
 import submarine.core.*;
 
 public class HydrothermalVentMapper {
+    public enum BathymetryMapType 
+    {
+        simple, diagonal
+    }
     public static void main(String[] args) {
-        System.out.println(SimpleMap(DataTray.getInput(5)).dangerZones);
+        System.out.println(SimpleMap(DataTray.getInput(5), BathymetryMapType.simple).dangerZones);
+        System.out.println(SimpleMap(DataTray.getInput(5), BathymetryMapType.diagonal).dangerZones);
     }
     
-    public static Bathymetry SimpleMap(File file)
+    public static Bathymetry SimpleMap(File file, BathymetryMapType mapType)
     {
         Bathymetry mapping = new Bathymetry(); 
         for (String line : (new InputScannerString(file).getResult()))
@@ -47,6 +52,10 @@ public class HydrothermalVentMapper {
                     coord[0] += inc;
                     mapping.add(coord[0],coord[1]);
                 }
+            }
+            else if (mapType == BathymetryMapType.diagonal)
+            {
+
             }
         }
         return mapping;
