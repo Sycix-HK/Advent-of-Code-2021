@@ -1,5 +1,10 @@
 ## Advent of Code 2021 Java
 
+## About
+* [data](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java/data) contains inputs
+* [submarine / core](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java/submarine/core) contains input handling tools
+* **[submarine / equipment](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java/submarine/equipment) contains solutions**
+
 ## Calendar
 
 | Mon | Tue | Wed | Thu | Fri | Sat | Sun |
