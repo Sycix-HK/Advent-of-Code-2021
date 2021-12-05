@@ -29,7 +29,7 @@ public class HydrothermalVentMapper {
                 Integer.parseInt(match.group(2)), 
                 Integer.parseInt(match.group(3)), 
                 Integer.parseInt(match.group(4))};
-
+                
             if (coord[0] == coord[2] && coord[1] != coord[3])
             {
                 mapping.add(coord[0],coord[1]);
