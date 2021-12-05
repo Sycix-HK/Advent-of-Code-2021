@@ -9,18 +9,15 @@ import java.io.*;
 import java.util.regex.*;
 
 import submarine.core.*;
+import submarine.equipment.sonar.Bathymetry.BathymetryMapType;
 
 public class HydrothermalVentMapper {
-    public enum BathymetryMapType 
-    {
-        simple, diagonal
-    }
     public static void main(String[] args) {
-        System.out.println(SimpleMap(DataTray.getInput(5), BathymetryMapType.simple).dangerZones);
-        System.out.println(SimpleMap(DataTray.getInput(5), BathymetryMapType.diagonal).dangerZones);
+        System.out.println("Danger zones with linear            data: " + scanForVents(DataTray.getInput(5), BathymetryMapType.linear).dangerZones);
+        System.out.println("Danger zones with linear + diagonal data: " + scanForVents(DataTray.getInput(5), BathymetryMapType.diagonal).dangerZones);
     }
     
-    public static Bathymetry SimpleMap(File file, BathymetryMapType mapType)
+    public static Bathymetry scanForVents(File file, BathymetryMapType mapType)
     {
         Bathymetry mapping = new Bathymetry(); 
         for (String line : (new InputScannerString(file).getResult()))
@@ -55,7 +52,14 @@ public class HydrothermalVentMapper {
             }
             else if (mapType == BathymetryMapType.diagonal)
             {
-
+                mapping.add(coord[0],coord[1]);
+                int[] incs = new int[] {coord[0] > coord[2] ? -1 : + 1, coord[1] > coord[3] ? -1 : + 1};
+                while (coord[0] != coord[2])
+                {
+                    coord[0] += incs[0];
+                    coord[1] += incs[1];
+                    mapping.add(coord[0],coord[1]);
+                }
             }
         }
         return mapping;
@@ -64,6 +68,10 @@ public class HydrothermalVentMapper {
 
 class Bathymetry
 {
+    public enum BathymetryMapType 
+    {
+        linear, diagonal
+    }
     public int[][] map = new int[1000][1000];
     public int dangerZones = 0;
     public void add(int x, int y)
