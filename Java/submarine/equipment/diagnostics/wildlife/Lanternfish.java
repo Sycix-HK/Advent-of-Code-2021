@@ -7,6 +7,7 @@ import java.util.*;
 public class Lanternfish {
     public static void main(String[] args) {
         System.out.println("Lanternfish population at day 80: "+ growthPrediction(DataTray.getInput(6),80));
+        System.out.println("Lanternfish population at day 256: "+ growthPrediction(DataTray.getInput(6),256));
     }
 
     public static int growthPrediction(File file, int atDay)
