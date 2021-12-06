@@ -3,7 +3,6 @@ package submarine.equipment.diagnostics.wildlife;
 import submarine.core.*;
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Lanternfish {
     public static void main(String[] args) {
@@ -14,20 +13,20 @@ public class Lanternfish {
     {
         try(BufferedReader reader = new BufferedReader(new FileReader(file)))
         {
-            LinkedList<Integer> fish = new LinkedList<>(Arrays.stream( ( Arrays.stream(reader.readLine().split(",")).mapToInt(Integer::parseInt).toArray() ) ).boxed().collect(Collectors.toList()));
-            for (int d = 0; d < atDay; d++)
-            {
-                for (int f = fish.size()-1; f != -1; f--)
-                {
-                    if ((fish.set(f,fish.get(f)-1)) == 0)
-                    {
-                        fish.set(f,6);
-                        fish.add(8);
-                    }
-                    System.out.println(fish.size());
-                }
+            int[] fish = new int[10];
+            for (String s : reader.readLine().split(",")) {
+                fish[Integer.parseInt(s)]++;
             }
-            return fish.size();
+            for (int day = 0; day < atDay; day++)
+            {
+                fish[7] += fish[0]; 
+                fish[9] = fish[0];
+                for (int i = 0; i < 9; i++) {
+                    fish[i] = fish[i+1];
+                }
+                fish[9] = 0;
+            }
+            return Arrays.stream(fish).sum();
         }
         catch(Exception e){}
         return 0;
