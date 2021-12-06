@@ -10,11 +10,11 @@ public class Lanternfish {
         System.out.println("Lanternfish population at day 256:  "+ growthPrediction(DataTray.getInput(6),256));
     }
 
-    public static int growthPrediction(File file, int atDay)
+    public static long growthPrediction(File file, int atDay)
     {
         try(BufferedReader reader = new BufferedReader(new FileReader(file)))
         {
-            int[] fish = new int[10];
+            long[] fish = new long[10];
             for (String s : reader.readLine().split(",")) {
                 fish[Integer.parseInt(s)]++;
             }
