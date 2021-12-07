@@ -1,4 +1,4 @@
-package submarine.equipment.diagnostics.wildlife;
+package wildlife;
 
 import submarine.core.*;
 import java.io.*;
