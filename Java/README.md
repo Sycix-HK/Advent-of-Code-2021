@@ -24,7 +24,7 @@
 * [Day 06](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java/wildlife)🌟🌟
 * [Day 07](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java/wildlife)🌟🌟
 * [Day 08](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java/submarine/emergency)🌟🌟
-* [Day 09](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java/submarine/equipment/sonar)🌟
+* [Day 09](https://github.com/Sycix-HK/Advent-of-Code-2021/tree/main/Java/submarine/equipment/sonar)🌟🌟
 
 ---
 
