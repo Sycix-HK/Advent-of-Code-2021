@@ -11,7 +11,8 @@ import java.util.*;
 
 public class HeightMapper {
     public static void main(String[] args) {
-        System.out.println("Sum of risk levels: "+riskLevel(DataTray.getInput(9)));
+        System.out.println("Sum of risk levels:               "+riskLevel(DataTray.getInput(9)));
+        System.out.println("3 largest basin sizes multiplied: "+largestBasinsRisk(DataTray.getInput(9)));
     }
 
     public static int riskLevel(File file)
@@ -54,4 +55,59 @@ public class HeightMapper {
 
         return lowPoints.stream().mapToInt(Integer::intValue).sum() + lowPoints.size();
     }
+
+    public static int largestBasinsRisk(File file)
+    {
+        ArrayList<String> lines = new InputScannerString(file).getResult();
+        int linelength = lines.get(0).length();
+        int[][] map = new int[lines.size()+2][linelength+2];
+
+        // make border
+        for(int x = 0; x < linelength+2; x++)
+        {
+            map[0][x] = 9;
+            map[lines.size()+1][x] = 9;
+        }
+        for(int y = 1; y < lines.size()+1; y++)
+        {
+            map[y][0] = 9;
+            map[y][linelength+1] = 9;
+        }
+
+        // put values
+        for (int y = 1; y < lines.size()+1; y++)
+        {
+            String line = lines.get(y-1);
+            for (int x = 1; x < linelength+1; x++)
+            {
+                map[y][x] = Character.getNumericValue(line.charAt(x-1));
+            }
+        }
+
+        // count
+        int[] sizes = new int[] {0,0,0};
+
+        for(int y = 0; y < linelength+2; y++)
+        {
+            for(int x = 0; x < lines.size()+2; x++)
+            {
+                int size = next(x,y,map);
+
+                if (size > sizes[0])
+                {
+                    sizes[0] = size;
+                    Arrays.sort(sizes);
+                }
+            }
+        }
+
+        return sizes[0] * sizes[1] * sizes[2];
+    }
+    static int next(int x, int y, int[][] map)
+    {
+        if (map[x][y] == 9) return 0;
+        map[x][y] = 9;
+        return 1 + next(x+1,y,map) + next(x-1,y,map) + next(x,y+1,map) + next(x,y-1,map);
+    }
+
 }
