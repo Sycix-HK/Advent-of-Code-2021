@@ -9,7 +9,7 @@ import submarine.core.*;
 import java.io.*;
 import java.util.*;
 
-public class HeightMapper {
+public class CaveMapper {
     public static void main(String[] args) {
         System.out.println("Sum of risk levels:               "+riskLevel(DataTray.getInput(9)));
         System.out.println("3 largest basin sizes multiplied: "+largestBasinsRisk(DataTray.getInput(9)));
