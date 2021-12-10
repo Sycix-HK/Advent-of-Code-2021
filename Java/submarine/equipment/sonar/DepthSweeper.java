@@ -5,9 +5,10 @@
 
 package submarine.equipment.sonar;
 
+import submarine.core.*;
 import java.io.*;
 import java.util.*;
-import submarine.core.*;
+import java.util.stream.Collectors;
 
 public class DepthSweeper {
 
@@ -27,15 +28,16 @@ public class DepthSweeper {
             {
                 elevations = (depth < (depth = Integer.parseInt(in.nextLine()))) ? elevations + 1 : elevations;
             }
-            in.close();
         }
-        catch (IOException e){}
+        catch (IOException e){
+            Logger.error(e);
+        }
 
         return elevations;
     }
 
     public static int sweepAdvanced(File input) {
-        ArrayList<Integer> scan = new submarine.core.InputScannerInteger(input).getResult();
+        List<Integer> scan = new submarine.core.InputScanner(input).getResult().stream().map(Integer::parseInt).collect(Collectors.toList());
         
         // denoise
         for (int i = 0; i < scan.size()-2; i++) {
