@@ -12,11 +12,11 @@ import submarine.core.*;
 public class DepthSweeper {
 
     public static void main(String[] args) {
-        System.out.println("Simple scan:    "+ SweepSimple  (DataTray.getInput(1)));
-        System.out.println("Denoised scan:  "+ SweepAdvanced(DataTray.getInput(1)));
+        System.out.println("Simple scan:    "+ sweepSimple  (DataTray.getInput(1)));
+        System.out.println("Denoised scan:  "+ sweepAdvanced(DataTray.getInput(1)));
     }
 
-    public static int SweepSimple(File f)
+    public static int sweepSimple(File f)
     {
         int elevations = 0;
 
@@ -34,7 +34,7 @@ public class DepthSweeper {
         return elevations;
     }
 
-    public static int SweepAdvanced(File input) {
+    public static int sweepAdvanced(File input) {
         ArrayList<Integer> scan = new submarine.core.InputScannerInteger(input).getResult();
         
         // denoise
