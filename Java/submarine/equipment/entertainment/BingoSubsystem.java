@@ -6,7 +6,6 @@
 package submarine.equipment.entertainment;
 
 import submarine.core.*;
-
 import java.io.*;
 import java.util.*;
 import java.util.stream.Stream;
@@ -39,8 +38,9 @@ public class BingoSubsystem {
 }
 class Game 
 {
-    public ArrayList<Board> boards = new ArrayList<>();
-    public int[] draws;
+    List<Board> boards = new ArrayList<>();
+    int[] draws;
+
     public Game(File file)
     {
         try (BufferedReader reader = new BufferedReader(new FileReader(file)))
@@ -67,7 +67,6 @@ class Game
                     }
                 }
             }
-            reader.close();
         }
         catch (IOException e){}
     }
@@ -76,17 +75,17 @@ class Board
 {
     enum State 
     {
-        unsolved, rowWin, columnWin
+        UNSOLVED, ROWWIN, COLUMNWIN
     }
-    State state = State.unsolved;
+    State state = State.UNSOLVED;
     int stateCode = 0;
     int winsOnValue = 0;
-    Boolean[] data;
+    boolean[] data;
     HashMap<Integer, Integer> indexof = new HashMap<>();
     private int score = 0;
 
     public Board(int[] data) { 
-        this.data = new Boolean[data.length];
+        this.data = new boolean[data.length];
         for (int i = 0; i < data.length; i++) indexof.put(data[i], i);
     }
 
@@ -97,9 +96,9 @@ class Board
             try {
                 int idx = indexof.get(draws[i]);
                 data[idx] = true;
-                if ((state = checkWin(idx)) != State.unsolved)
+                if ((state = checkWin(idx)) != State.UNSOLVED)
                 {
-                    stateCode = (i*1000) + (idx + (state == State.columnWin ? 25 : 0));
+                    stateCode = (i*1000) + (idx + (state == State.COLUMNWIN ? 25 : 0));
                     winsOnValue = draws[i];
                     return stateCode;
                 }
@@ -117,7 +116,7 @@ class Board
                 c++;
             }
         }catch(Exception e){}
-        if (c == 5) return State.rowWin;
+        if (c == 5) return State.ROWWIN;
         c = 0;
         int col = at % 5;
         while (c != 5 && data[col])
@@ -125,15 +124,15 @@ class Board
             col+=5;
             c++;
         }
-        return (c == 5) ? State.columnWin : State.unsolved;
+        return (c == 5) ? State.COLUMNWIN : State.UNSOLVED;
     }
     public int getScore()
     {
-        if (state == State.unsolved) return 0;
+        if (state == State.UNSOLVED) return 0;
         score = 0;
         for (int key : indexof.keySet())
         {
-            if (data[indexof.get(key)] == null)
+            if (!data[indexof.get(key)])
             {
                 score += key;
             }
