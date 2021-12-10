@@ -18,7 +18,7 @@ public class CaveMapper {
     public static int riskLevel(File file)
     {
         ArrayList<ArrayList<Integer>> map = new ArrayList<ArrayList<Integer>>();
-        ArrayList<String> lines = new InputScannerString(file).getResult();
+        ArrayList<String> lines = new InputScanner(file).getResult();
         ArrayList<Integer> lowPoints = new ArrayList<Integer>();
         for (int y = 0; y < lines.size(); y++)
         {
@@ -58,7 +58,7 @@ public class CaveMapper {
 
     public static int largestBasinsRisk(File file)
     {
-        ArrayList<String> lines = new InputScannerString(file).getResult();
+        ArrayList<String> lines = new InputScanner(file).getResult();
         int linelength = lines.get(0).length();
         int[][] map = new int[lines.size()+2][linelength+2];
 
