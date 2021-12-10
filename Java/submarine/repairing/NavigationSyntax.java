@@ -25,7 +25,7 @@ public class NavigationSyntax {
         ArrayList<Long> lineScores = new ArrayList<>(); 
         for (String line : new InputScannerString(file).getResult())
         {
-            Stack<Character> stack = new Stack<>();
+            Deque<Character> stack = new ArrayDeque<>();
             String openings = "([{<";
             String closings = ")]}>";
             int isClosing=0;
