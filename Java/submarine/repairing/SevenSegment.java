@@ -17,7 +17,7 @@ public class SevenSegment {
 
     public static int uniqueNumbersInOutput(File file)
     {
-        ArrayList<String> lines = new InputScannerString(file).getResult();
+        ArrayList<String> lines = new InputScanner(file).getResult();
         int c = 0;
         for (String line : lines) {
             String[] digits = line.split(" ");
@@ -37,7 +37,7 @@ public class SevenSegment {
 
     public static int sumOfDecodedDigitsInOutput(File file)
     {
-        ArrayList<String> lines = new InputScannerString(file).getResult();
+        ArrayList<String> lines = new InputScanner(file).getResult();
         int c = 0;
         for (String line : lines) {
             DigitPattern pattern = new DigitPattern(line);
