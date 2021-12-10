@@ -9,12 +9,11 @@ import submarine.core.*;
 import java.io.*;
 import java.util.*;
 
-import submarine.core.*;
-
-public abstract class DiagnosticsTool {
+public interface DiagnosticsTool {
     public static void main(String[] args) {
-        System.out.println(calculateConsumption(DataTray.getInput(3)).toString());
-        System.out.println(calculateLifeSupportRating(DataTray.getInput(3)).toString());
+        TimeMeasure timer = new TimeMeasure();
+        Logger.print(timer, "Consumption", calculateConsumption(DataTray.getInput(3)));
+        Logger.print(timer, "Life support rating", calculateLifeSupportRating(DataTray.getInput(3)));
     }
 
     // Part 1
