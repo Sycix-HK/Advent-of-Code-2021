@@ -39,7 +39,7 @@ public class CrabSubmarines {
                         fuelCost += (((n*n)+n) / 2);
                     }
                     break;
-                default: throw new IllegalArgumentException("These crabs are getting creative with their fuel");
+                default: throw new IllegalArgumentException("Damn these crabs are getting creative with their fuel");
             }
             return fuelCost;
         }
