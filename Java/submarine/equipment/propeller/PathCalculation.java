@@ -5,9 +5,9 @@
 
 package submarine.equipment.propeller;
 
-import java.io.File;
+import submarine.core.*;
+import java.io.*;
 import java.util.*;
-import submarine.core.DataTray;
 
 enum Direction {
     forward,
@@ -38,7 +38,7 @@ public class PathCalculation {
     public int getHorizontal() {return horizontal; }
 
     public PathCalculation(File file) {
-        ArrayList<String> data = new submarine.core.InputScannerString(file).getResult();
+        ArrayList<String> data = new submarine.core.InputScanner(file).getResult();
 
         for (String line : data) {
             String[] splitline = line.trim().split(" ");
@@ -100,8 +100,8 @@ public class PathCalculation {
 
 
 class Instruction {
-    public Direction dir;
-    public int units;
+    public final Direction dir;
+    public final int units;
 
     public Instruction(Direction dir, int units) {
         this.dir = dir;
