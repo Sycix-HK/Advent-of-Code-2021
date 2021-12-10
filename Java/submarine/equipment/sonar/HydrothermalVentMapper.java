@@ -20,7 +20,7 @@ public class HydrothermalVentMapper {
     public static Bathymetry scanForVents(File file, BathymetryMapType mapType)
     {
         Bathymetry mapping = new Bathymetry(); 
-        for (String line : (new InputScannerString(file).getResult()))
+        for (String line : (new InputScanner(file).getResult()))
         {
             Matcher match = Pattern.compile("(\\d*),(\\d*) -> (\\d*),(\\d*)").matcher(line); 
             match.find();
@@ -50,7 +50,7 @@ public class HydrothermalVentMapper {
                     mapping.add(coord[0],coord[1]);
                 }
             }
-            else if (mapType == BathymetryMapType.diagonal)
+            else if (mapType == BathymetryMapType.DIAGONAL)
             {
                 mapping.add(coord[0],coord[1]);
                 int[] incs = new int[] {coord[0] > coord[2] ? -1 : + 1, coord[1] > coord[3] ? -1 : + 1};
@@ -70,10 +70,13 @@ class Bathymetry
 {
     public enum BathymetryMapType 
     {
-        orthogonal, diagonal
+        ORTHOGONAL, DIAGONAL
     }
-    public int[][] map = new int[1000][1000];
-    public int dangerZones = 0;
+    private int[][] map = new int[1000][1000];
+    private int dangerZones = 0;
+
+    public int getDangerZones() {return dangerZones;}
+
     public void add(int x, int y)
     {
         if (++map[x][y] == 2) dangerZones++;
