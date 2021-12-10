@@ -12,8 +12,9 @@ import java.util.stream.Stream;
 
 public class BingoSubsystem {
     public static void main(String[] args) {
-        System.out.println("Winner board has "+getWinner(DataTray.getInput(4)).getScore()+" points");
-        System.out.println("Last winning board has "+getLastWinning(DataTray.getInput(4)).getScore()+" points");
+        TimeMeasure timer = new TimeMeasure();
+        Logger.print(timer, "Winner board points", getWinner(DataTray.getInput(4)).getScore());
+        Logger.print(timer, "Last winning board points", getLastWinning(DataTray.getInput(4)).getScore());
     }
     public static Board getWinner(File file)
     {
