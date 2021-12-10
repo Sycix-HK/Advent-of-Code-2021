@@ -35,7 +35,7 @@ public class Lanternfish {
             }
             return Arrays.stream(fish).sum();
         }
-        catch(Exception e){}
+        catch(Exception e){Logger.error(e);}
         return 0;
     } 
 }
