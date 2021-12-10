@@ -11,18 +11,19 @@ import java.util.*;
 
 public class CaveMapper {
     public static void main(String[] args) {
-        System.out.println("Sum of risk levels:               "+riskLevel(DataTray.getInput(9)));
-        System.out.println("3 largest basin sizes multiplied: "+largestBasinsRisk(DataTray.getInput(9)));
+        TimeMeasure timer = new TimeMeasure();
+        Logger.print(timer, "Sum of risk levels", riskLevel(DataTray.getInput(9)));
+        Logger.print(timer, "3 largest basin sizes multiplied", largestBasinsRisk(DataTray.getInput(9)));
     }
 
     public static int riskLevel(File file)
     {
         ArrayList<ArrayList<Integer>> map = new ArrayList<ArrayList<Integer>>();
         ArrayList<String> lines = new InputScanner(file).getResult();
-        ArrayList<Integer> lowPoints = new ArrayList<Integer>();
+        ArrayList<Integer> lowPoints = new ArrayList<>();
         for (int y = 0; y < lines.size(); y++)
         {
-            ArrayList<Integer> row = new ArrayList<Integer>();
+            ArrayList<Integer> row = new ArrayList<>();
             int linelength = lines.get(y).length();
             for (int x = 0; x < linelength; x++)
             {
