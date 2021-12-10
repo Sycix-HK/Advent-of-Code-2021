@@ -11,8 +11,9 @@ import java.util.*;
 
 public class SevenSegment {
     public static void main(String[] args) {
-        System.out.println("Unique numbers in output: " + uniqueNumbersInOutput(DataTray.getInput(8)));
-        System.out.println("Sum of decoded output:    " + sumOfDecodedDigitsInOutput(DataTray.getInput(8)));
+        TimeMeasure timer = new TimeMeasure();
+        Logger.print(timer, "Unique numbers in output", uniqueNumbersInOutput(DataTray.getInput(8)));
+        Logger.print(timer, "Sum of decoded output", sumOfDecodedDigitsInOutput(DataTray.getInput(8)));
     }
 
     public static int uniqueNumbersInOutput(File file)
@@ -22,12 +23,11 @@ public class SevenSegment {
         for (String line : lines) {
             String[] digits = line.split(" ");
             for (int i = 14; i > 10; i--) {
-                switch (digits[i].length())                {
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 7:
+                switch (digits[i].length())                
+                {
+                    case 2,3,4,7:
                         c++;
+                        break;
                     default: break;
                 }
             }
@@ -44,7 +44,7 @@ public class SevenSegment {
             String[] digits = line.split(" ");
             char[] outputNumber = new char[] {'x','x','x','x'};
             for (int i = 0; i < 4; i++) {
-                outputNumber[Math.abs(3-i)] = pattern.DecodeDigit(digits[14-i]);
+                outputNumber[Math.abs(3-i)] = pattern.decodeDigit(digits[14-i]);
             }
             c += Integer.parseInt( new String( outputNumber ) );
         }
@@ -62,10 +62,10 @@ class DigitPattern
         666            */
     public DigitPattern(String readings)
     {
-        code = Decode(readings);
+        code = decode(readings);
     }
 
-    public Character DecodeDigit(String stringCode)
+    public Character decodeDigit(String stringCode)
     {
         switch (stringCode.length()) {
             case 2: return '1';
@@ -78,7 +78,7 @@ class DigitPattern
         }
     }
 
-    private static Character[] Decode(String readings)
+    private static Character[] decode(String readings)
     {
         Character[] outpcode = new Character[] {'0','0','0','0','0','0','0'};
         String[] nums = new String[10];
