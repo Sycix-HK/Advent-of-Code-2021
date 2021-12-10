@@ -18,5 +18,5 @@ public class InputScanner {
         }
     }
 
-    public List<String> getResult() { return result; }
+    public ArrayList<String> getResult() { return result; }
 }
