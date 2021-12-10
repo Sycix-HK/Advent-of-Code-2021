@@ -12,25 +12,26 @@ import java.util.stream.*;
 
 public class CrabSubmarines {
     public static void main(String[] args) {
-        System.out.println("Minimal simple      fuel usage to group: " + optimalFuelToAlign(DataTray.getInput(7),FuelConsumptionType.simple));
-        System.out.println("Minimal incremental fuel usage to group: " + optimalFuelToAlign(DataTray.getInput(7),FuelConsumptionType.incremental));
+        TimeMeasure timer = new TimeMeasure();
+        Logger.print(timer, "Minimal simple fuel usage to group",optimalFuelToAlign(DataTray.getInput(7),FuelConsumptionType.SIMPLE));
+        Logger.print(timer, "Minimal incremental fuel usage to group",optimalFuelToAlign(DataTray.getInput(7),FuelConsumptionType.INCREMENTAL));
     }
 
     public static int optimalFuelToAlign(File file, FuelConsumptionType fuel)
     {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            ArrayList<Integer> crabs = new ArrayList<Integer>(Stream.of(reader.readLine().split(",")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList()));
+            ArrayList<Integer> crabs = new ArrayList<>(Stream.of(reader.readLine().split(",")).mapToInt(Integer::parseInt).boxed().toList());
             Collections.sort(crabs);
             int fuelCost = 0;
             switch (fuel) {
-                case simple:
+                case SIMPLE:
                     Integer median = crabs.get(crabs.size() / 2);
                     for (Integer c : crabs)
                     {
                         fuelCost += Math.abs(c - median);
                     }
                     break;
-                case incremental:
+                case INCREMENTAL:
                     Integer mean = (crabs.stream().reduce(0,Integer::sum))/crabs.size();
                     for (Integer c : crabs)
                     {
@@ -43,12 +44,12 @@ public class CrabSubmarines {
             }
             return fuelCost;
         }
-        catch (Exception e) {System.err.println(e);}
+        catch (Exception e) {Logger.error(e);}
         return -1;
     }
 
     enum FuelConsumptionType
     {
-        simple, incremental
+        SIMPLE, INCREMENTAL
     }
 }
