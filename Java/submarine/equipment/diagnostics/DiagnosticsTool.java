@@ -5,6 +5,7 @@
 
 package submarine.equipment.diagnostics;
 
+import submarine.core.*;
 import java.io.*;
 import java.util.*;
 
@@ -18,12 +19,12 @@ public abstract class DiagnosticsTool {
 
     // Part 1
 
-    public static String calculateConsumption(File data)
+    public static int calculateConsumption(File data)
     {
         int gamma = 0;
         int epsilon = 0;
 
-        ArrayList<String> dataRaw = new InputScannerString(data).getResult();
+        ArrayList<String> dataRaw = new InputScanner(data).getResult();
         int bitSize = dataRaw.get(0).length();
         int dataSize = dataRaw.size();
         for (int i = 0; i < bitSize; i++) {
@@ -35,14 +36,14 @@ public abstract class DiagnosticsTool {
             else                    epsilon |= (1 << Math.abs(i-bitSize+1));
         }
 
-        return ("Consumption = gamma: " + gamma + " * epsilon: " + epsilon + " = " + gamma*epsilon);
+        return gamma*epsilon;
     }
 
     // Part 2
 
     public static int oxygenGeneratorRating(File data)
     {
-        ArrayList<String> dataRaw = new InputScannerString(data).getResult();
+        ArrayList<String> dataRaw = new InputScanner(data).getResult();
         int bitSize = dataRaw.get(0).length();
         for (int i = 0; i < bitSize; i++) {
             int c = 0;
@@ -54,7 +55,6 @@ public abstract class DiagnosticsTool {
             dataRaw.removeIf(line -> line.charAt(index) == (dominantBit?'0':'1'));
             if (dataRaw.size() == 1) break;
         }
-        if (dataRaw.size() != 1) throw new RuntimeException("data size ("+ dataRaw.size() +") must equal to 1");
         int rating = 0;
         for (int i = 0; i < bitSize; i++)
         {
@@ -62,9 +62,9 @@ public abstract class DiagnosticsTool {
         }
         return rating;
     }
-    public static int C02ScrubberRating(File data)
+    public static int c02ScrubberRating(File data)
     {
-        ArrayList<String> dataRaw = new InputScannerString(data).getResult();
+        ArrayList<String> dataRaw = new InputScanner(data).getResult();
         int bitSize = dataRaw.get(0).length();
         for (int i = 0; i < bitSize; i++) {
             int c = 0;
@@ -76,7 +76,6 @@ public abstract class DiagnosticsTool {
             dataRaw.removeIf(line -> line.charAt(index) == (dominantBit?'0':'1'));
             if (dataRaw.size() == 1) break;
         }
-        if (dataRaw.size() != 1) throw new RuntimeException("data size ("+ dataRaw.size() +") must equal to 1");
         int rating = 0;
         for (int i = 0; i < bitSize; i++)
         {
@@ -85,10 +84,10 @@ public abstract class DiagnosticsTool {
         return rating;
     }
 
-    public static String calculateLifeSupportRating(File data)
+    public static int calculateLifeSupportRating(File data)
     {
         int oxygenGeneratorRating = oxygenGeneratorRating(data);
-        int c02ScrubberRating = C02ScrubberRating(data);
-        return ("Life Support Rating = Oxygen generator: " + oxygenGeneratorRating + " * C02 scrubber: " + c02ScrubberRating + " = " + oxygenGeneratorRating*c02ScrubberRating);
+        int c02ScrubberRating = c02ScrubberRating(data);
+        return oxygenGeneratorRating*c02ScrubberRating;
     }
 }
