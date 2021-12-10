@@ -11,8 +11,10 @@ import java.util.*;
 
 public class NavigationSyntax {
     public static void main(String[] args) {
-        System.out.println("Syntax corruption score: " + syntaxErrorScore(DataTray.getInput(10),ScoreType.CORRUPT));
-        System.out.println("Syntax completion score: " + syntaxErrorScore(DataTray.getInput(10),ScoreType.INCOMPLETE));
+
+        TimeMeasure timer = new TimeMeasure();
+        Logger.print(timer,"Syntax corruption score",syntaxErrorScore(DataTray.getInput(10),ScoreType.CORRUPT));
+        Logger.print(timer,"Syntax completion score",syntaxErrorScore(DataTray.getInput(10),ScoreType.INCOMPLETE));
     }
 
     public enum ScoreType {
@@ -23,7 +25,7 @@ public class NavigationSyntax {
     {
         int score = 0;
         ArrayList<Long> lineScores = new ArrayList<>(); 
-        for (String line : new InputScannerString(file).getResult())
+        for (String line : new InputScanner(file).getResult())
         {
             Deque<Character> stack = new ArrayDeque<>();
             String openings = "([{<";
