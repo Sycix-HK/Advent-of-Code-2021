@@ -13,7 +13,7 @@ public class DumboOctopi {
     public static void main(String[] args) {
         TimeMeasure timer = new TimeMeasure();
         Logger.print(timer, "Flashes after 100 steps", flashSum(DataTray.getInput(11),100));
-        Logger.print(timer, "Octopi syncronize on step", getSyncStep(DataTray.getInput(11)));
+        Logger.print(timer, "Octopi synchronize on step", getSyncStep(DataTray.getInput(11)));
     }
 
     public static int flashSum(File file, int at)
