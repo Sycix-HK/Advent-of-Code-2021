@@ -3,13 +3,13 @@
 /////////////////////|      Day 09      |/////////////////////
 //////////////////////////////////////////////////////////////
 
-package submarine.equipment.sonar;
+package submarine.equipment.sonar.cavemapper;
 
 import submarine.core.*;
 import java.io.*;
 import java.util.*;
 
-public class CaveMapper {
+public class BasinMapper {
     public static void main(String[] args) {
         TimeMeasure timer = new TimeMeasure();
         Logger.print(timer, "Sum of risk levels", riskLevel(DataTray.getInput(9)));
