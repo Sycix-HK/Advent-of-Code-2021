@@ -1,3 +1,8 @@
+
+//////////////////////////////////////////////////////////////
+/////////////////////|      Day 12      |/////////////////////
+//////////////////////////////////////////////////////////////
+
 package submarine.equipment.sonar.caves;
 
 import submarine.core.*;
@@ -12,7 +17,34 @@ public class PathFinder {
 
     public static long countPaths(File file)
     {
-        HashMap<String, Cave> caves = new HashMap<>();
+        CaveSystem system = new CaveSystem(file);
+
+        return deepSearch( system.caves.get("start") , new HashSet<>());
+    }
+
+    @SuppressWarnings("unchecked")
+    static int deepSearch(Cave cave, HashSet<String> pathway)
+    {
+        if (cave.getName().equals("end")) return 1;
+        HashSet<String> journey = (HashSet<String>) pathway.clone();
+        journey.add(cave.getName());
+        int count = 0;
+        for (Cave route : cave.connections)
+        {
+            if ( route.size == Cave.Size.LARGE || !pathway.contains(route.getName()) )
+            {
+                count += deepSearch(route, journey);
+            }
+        }
+        return count;
+    }
+}
+
+class CaveSystem
+{
+    public HashMap<String, Cave> caves = new HashMap<String, Cave>();
+    public CaveSystem(File file)
+    {
         for (String line : new InputScanner(file).getResult() )
         {
             String[] linePieces = line.split("-");
@@ -27,7 +59,6 @@ public class PathFinder {
 
             Cave.connect(caves.get(linePieces[0]), caves.get(linePieces[1]));
         }
-        return 0;
     }
 }
 
