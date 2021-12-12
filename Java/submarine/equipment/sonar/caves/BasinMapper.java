@@ -3,7 +3,7 @@
 /////////////////////|      Day 09      |/////////////////////
 //////////////////////////////////////////////////////////////
 
-package submarine.equipment.sonar.cavemapper;
+package submarine.equipment.sonar.caves;
 
 import submarine.core.*;
 import java.io.*;
