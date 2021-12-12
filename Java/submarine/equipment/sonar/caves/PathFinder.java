@@ -12,8 +12,8 @@ import java.util.*;
 public class PathFinder {
     public static void main(String[] args) {
         TimeMeasure timer = new TimeMeasure();
-        Logger.print(timer, "Paths in cave", countPaths(DataTray.getInput(12),SearchType.QUICK));
-        Logger.print(timer, "Paths in cave", countPaths(DataTray.getInput(12),SearchType.YEAHIVEGOTTIME));
+        Logger.print(timer, "Paths in cave visiting smalls once", countPaths(DataTray.getInput(12),SearchType.QUICK));
+        Logger.print(timer, "Paths in cave visiting smalls twice", countPaths(DataTray.getInput(12),SearchType.YEAHIVEGOTTIME));
     }
 
     enum SearchType{  QUICK, YEAHIVEGOTTIME  }
