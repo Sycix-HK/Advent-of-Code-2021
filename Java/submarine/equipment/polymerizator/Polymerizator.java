@@ -19,57 +19,76 @@ public class Polymerizator {
 
     public static long leastAndMostCommonCharDifference(File file, int steps)
     {
-        String polymer = polymerizate(new Manual(file),steps);
-        Map<Character, Long> occurences = new LinkedHashMap<>();
-        for (int i = 0; i < polymer.length(); i++)
+        Manual manual = new Manual(file);
+        Map<String, Long> polymer = polymerizate(manual,steps);
+        Map<Character,Long> occurrence = new HashMap<>();
+
+        for (Map.Entry<String, Long> entry : polymer.entrySet())
         {
-            Character c = polymer.charAt(i);
-            occurences.put(c, occurences.containsKey(c) ? occurences.get(c)+1 : 1);
+            occurrence.put(entry.getKey().charAt(0), 
+                occurrence.containsKey(entry.getKey().charAt(0)) ? 
+                    occurrence.get(entry.getKey().charAt(0))+entry.getValue() :
+                    entry.getValue()
+            );
+            occurrence.put(entry.getKey().charAt(1), 
+                occurrence.containsKey(entry.getKey().charAt(1)) ? 
+                    occurrence.get(entry.getKey().charAt(1))+entry.getValue() :
+                    entry.getValue()
+            );
         }
+
+        // fix ends
+        occurrence.put(manual.startingPolymer.charAt(0),occurrence.get(manual.startingPolymer.charAt(0))-1);
+        occurrence.put(manual.startingPolymer.charAt(manual.startingPolymer.length()-1),occurrence.get(manual.startingPolymer.charAt(manual.startingPolymer.length()-1))-1);
+        for (Map.Entry<Character,Long> entry : occurrence.entrySet()) 
+        {
+            occurrence.put(entry.getKey(),entry.getValue()/2);
+        }
+        occurrence.put(manual.startingPolymer.charAt(0),occurrence.get(manual.startingPolymer.charAt(0))+1);
+        occurrence.put(manual.startingPolymer.charAt(manual.startingPolymer.length()-1),occurrence.get(manual.startingPolymer.charAt(manual.startingPolymer.length()-1))+1);
+
         long maxval = 0;
         long minval = Long.MAX_VALUE;
-        for (Character c : occurences.keySet())
+        for (Map.Entry<Character,Long> entry : occurrence.entrySet())
         {
-            if (occurences.get(c) > maxval)
+            if (entry.getValue() > maxval)
             {
-                maxval = occurences.get(c);
+                maxval = entry.getValue();
             }
-            if (occurences.get(c) < minval)
+            if (entry.getValue() < minval)
             {
-                minval = occurences.get(c);
+                minval = entry.getValue();
             }
         }
 
         return maxval - minval;
     }
 
-    public static String polymerizate(Manual manual,int steps)
+    public static Map<String, Long> polymerizate(Manual manual,int steps)
     {
-        StringBuilder s = new StringBuilder();
-        s.append(manual.getStartingPolymer());
+        Map<String, Long> occ = manual.getStartingPolymer();
         for (int step = 0; step < steps; step++)
         {
-            System.out.println(step);
-            String polymer = s.toString();
-            s = new StringBuilder();
-
-            for (int i = 0; i < polymer.length()-1; i++)
+            Map<String, Long> occbuild = new HashMap<>();
+            
+            for(Map.Entry<String,Long> entry : occ.entrySet())
             {
-                s.append(polymer.charAt(i));
-                s.append(manual.getAddition(polymer.charAt(i), polymer.charAt(i+1)));
+                String[] outpkeys = manual.getAddition(entry.getKey());
+                occbuild.put(outpkeys[0], occbuild.containsKey(outpkeys[0]) ? occbuild.get(outpkeys[0])+entry.getValue() : entry.getValue());
+                occbuild.put(outpkeys[1], occbuild.containsKey(outpkeys[1]) ? occbuild.get(outpkeys[1])+entry.getValue() : entry.getValue());
             }
-            s.append(polymer.charAt(polymer.length()-1));
+
+            occ = occbuild;
         }
-        return s.toString();
+        return occ;
     }
     
 }
 
 class Manual
 {
-    private final HashMap<String,Character> entries = new HashMap<>();
-    private String startingPolymer;
-    public String getStartingPolymer() { return startingPolymer; }
+    private final HashMap<String,String[]> entries = new HashMap<>();
+    public String startingPolymer;
 
     public Manual(File file)
     {
@@ -77,9 +96,9 @@ class Manual
         {
             if (line. length() == 7)
             {
-                Matcher match = Pattern.compile("(\\w)(\\w) -> (\\w)").matcher(line); 
+                Matcher match = Pattern.compile("(\\w\\w) -> (\\w)").matcher(line); 
                 match.find();
-                entries.put((match.group(1)+match.group(2)), Character.valueOf(match.group(3).charAt(0)));
+                entries.put(match.group(1), new String[] {match.group(1).charAt(0)+match.group(2),match.group(2)+match.group(1).charAt(1)} );
             }
             else if (line.trim().length() != 0)
             {
@@ -87,8 +106,18 @@ class Manual
             }
         }
     }
-    public Character getAddition(char a, char b)
+    public String[] getAddition(String ab)
     {
-        return entries.get(String.valueOf(a) + String.valueOf(b));
+        return entries.get(ab);
+    }
+    public Map<String, Long> getStartingPolymer()
+    {
+        Map<String, Long> poly = new HashMap<>();
+        for (int i = 0; i < startingPolymer.length()-1; i++)
+        {
+            String val = (""+Character.valueOf(startingPolymer.charAt(i)) +""+ Character.valueOf(startingPolymer.charAt(i+1))+"");
+            poly.put(val, poly.containsKey(val) ? poly.get(val)+1 : 1);
+        }
+        return poly;
     }
 }
