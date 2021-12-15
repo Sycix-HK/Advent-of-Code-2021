@@ -12,8 +12,10 @@ import java.util.*;
 public class Chitons {
     public static void main(String[] args) {
         TimeMeasure timer = new TimeMeasure();
+        System.out.println("(!) Expected runtime: 801 ms");
         Logger.print(timer, "Lowest risk level in small map", minimumRiskRoutePartial(DataTray.getInput(15)));
-        //Logger.print(timer, "Lowest risk level in full map", minimumRiskRouteFull(DataTray.getInput(15)));
+        System.out.println("(!) Expected runtime: 510220 ms (~ 8 minutes)");
+        Logger.print(timer, "Lowest risk level in full map", minimumRiskRouteFull(DataTray.getInput(15)));
     }
 
     public static int minimumRiskRoutePartial(File file)
@@ -40,71 +42,85 @@ public class Chitons {
         cave[0][0].risk = 0;
         set.update(cave[0][0]);
 
-        //dijkstra
+        return dijkstra(set,cave,input,linelength,lines.size());
+    }
+
+    public static int minimumRiskRouteFull(File file)
+    {
+        List<String> lines = new InputScanner(file).getResult();
+        int linelength = lines.get(0).length();
+        
+        Tile[][] cave = new Tile[lines.size()*5][linelength*5];
+        int[][] input = new int[lines.size()*5][linelength*5];
+        MaxIndexedUniqueTileSet set = new MaxIndexedUniqueTileSet();
+
+        // put values
+        for (int j = 0; j < 5; j++)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                for (int y = 0; y < lines.size(); y++)
+                {
+                    String line = lines.get(y);
+                    for (int x = 0; x < linelength; x++)
+                    {
+                        int nx = x+(i*linelength);
+                        int ny = y+(j*lines.size());
+                        input[nx][ny] = warp((Character.getNumericValue(line.charAt(x)))+i+j);
+                        Tile t = new Tile(nx,ny);
+                        cave[nx][ny] = t;
+                        set.insert(t);
+                    }
+                }
+            }
+        }
+
+        cave[0][0].risk = 0;
+        set.update(cave[0][0]);
+
+        return dijkstra(set,cave,input,linelength*5,lines.size()*5);
+    }
+
+    private static int dijkstra(MaxIndexedUniqueTileSet set, Tile[][] cave, int[][] input, int linelengthX, int linelengthY)
+    {
         while (set.size() != 0)
         {
             Tile t = set.pop();
             t.locked = true;
 
-            if (t.y!=0) //up
-            {
-                Tile t2 = cave[t.x][t.y-1];
-                if (!t2.locked && t2.risk > t.risk+input[t.x][t.y-1])
-                {
-                    t2.risk = t.risk+input[t.x][t.y-1];
-                    t2.fromX = t.x;
-                    t2.fromY = t.y;
-                    set.update(t2);
-                }
-            }
-            if (t.x!=linelength-1) //right
-            {
-                Tile t2 = cave[t.x+1][t.y];
-                if (!t2.locked && t2.risk > t.risk+input[t.x+1][t.y])
-                {
-                    t2.risk = t.risk+input[t.x+1][t.y];
-                    t2.fromX = t.x;
-                    t2.fromY = t.y;
-                    set.update(t2);
-                }
-            }
-            if (t.y!=lines.size()-1) //down
-            {
-                Tile t2 = cave[t.x][t.y+1];
-                if (!t2.locked && t2.risk > t.risk+input[t.x][t.y+1])
-                {
-                    t2.risk = t.risk+input[t.x][t.y+1];
-                    t2.fromX = t.x;
-                    t2.fromY = t.y;
-                    set.update(t2);
-                }
-            }
-            if (t.x!=0) //left
-            {
-                Tile t2 = cave[t.x-1][t.y];
-                if (!t2.locked && t2.risk > t.risk+input[t.x-1][t.y])
-                {
-                    t2.risk = t.risk+input[t.x-1][t.y];
-                    t2.fromX = t.x;
-                    t2.fromY = t.y;
-                    set.update(t2);
-                }
-            }
+            //up
+            if (t.y!=0) updateTile(t, cave[t.x][t.y-1], t.risk+input[t.x][t.y-1], set);
+
+            //right
+            if (t.x!=linelengthX-1) updateTile(t, cave[t.x+1][t.y], t.risk+input[t.x+1][t.y], set);
+
+            //down
+            if (t.y!=linelengthY-1) updateTile(t, cave[t.x][t.y+1], t.risk+input[t.x][t.y+1], set);
+
+            //left
+            if (t.x!=0) updateTile(t, cave[t.x-1][t.y], t.risk+input[t.x-1][t.y], set);
         }
 
-        //debug
-        for (int y = 0; y < lines.size(); y++)
+        return cave[linelengthY-1][linelengthX-1].risk;
+    }
+
+    private static void updateTile(Tile t, Tile t2, int newRisk, MaxIndexedUniqueTileSet set)
+    {
+        if (!t2.locked && t2.risk > newRisk)
         {
-            StringBuilder sb = new StringBuilder();
-            for (int x = 0; x < linelength; x++)
-            {
-                sb.append(cave[x][y].risk < 10?(" "+cave[x][y].risk):(cave[x][y].risk)).append(' ');
-            }
-            System.out.println(sb);
+            t2.risk = newRisk;
+            t2.fromX = t.x;
+            t2.fromY = t.y;
+            set.update(t2);
         }
-
-        return cave[lines.size()-1][linelength-1].risk;
-
+    }
+    public static int warp(int n)
+    {
+        while (n > 9)
+        {
+            n-=9;
+        }
+        return n;
     }
 
 }
