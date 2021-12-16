@@ -44,6 +44,13 @@ class Message
         }
         bin = sb.toString();
         main = Packet.decode(bin);
+
+        for (int i = 0; i < bin.length(); i++)
+        {
+            int ver;
+            int type;
+            
+        }
     }
 
     private static String HexToBin(char h)
@@ -103,16 +110,6 @@ class Operator extends Packet
     public Operator(int version, int typeID, String bin)
     {
         super(version,typeID);
-        packets = bin.charAt(6) == 1 ? elevenBit(bin) : fifteenBit(bin);
-    }
-
-    static Packet[] elevenBit(String bin)
-    {
-
-    }
-    static Packet[] fifteenBit(String bin)
-    {
-
     }
 }
 
