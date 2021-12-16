@@ -1,6 +1,6 @@
 
 //////////////////////////////////////////////////////////////
-/////////////////////|      Day 15      |/////////////////////
+/////////////////////|      Day 16      |/////////////////////
 //////////////////////////////////////////////////////////////
 
 package submarine.equipment.communication;
@@ -14,7 +14,7 @@ public class BITSDecoder
     public static void main(String[] args) 
     {
         TimeMeasure timer = new TimeMeasure();
-        Logger.print(timer, "Sum of version numbers", sumOfVersions(DataTray.getInput(16)));
+        Logger.print(timer, "Sum of version numbers", sumOfVersions(DataTray.getTest(16)));
     }
 
 
@@ -33,6 +33,7 @@ class Message
 {
     String hex;
     String bin;
+    Packet main;
     public Message(String hexadecimal)
     {
         hex = hexadecimal;
@@ -42,7 +43,9 @@ class Message
             sb.append(HexToBin(hex.charAt(i)));
         }
         bin = sb.toString();
+        main = Packet.decode(bin);
     }
+
     private static String HexToBin(char h)
     {
         switch (h)
@@ -68,18 +71,48 @@ class Message
     }
 }
 
-//interface Packet
-//{
-//    String body;
-//    int version;
-//}
-//
-//class Literal implements Packet
-//{
-//    int version = 0;
-//}
-//
-//class Operator implements Packet
-//{
-//    int version = 0;
-//}
+class Packet
+{
+    int version;
+    int typeID;
+    public Packet(int version, int typeID)
+    {
+        this.version = version;
+        this.typeID = typeID;
+    }
+    public static Packet decode(String bin)
+    {
+        int version = Integer.parseInt(bin.substring(0,3),2);
+        int typeID = Integer.parseInt(bin.substring(3,6),2);
+        return typeID == 4 ? new Literal(version,typeID,bin) : new Operator(version,typeID,bin);
+    }
+}
+
+class Literal extends Packet
+{
+    int value;
+    public Literal(int version, int typeID, String bin)
+    {
+        super(version,typeID);
+    }
+}
+
+class Operator extends Packet
+{
+    Packet[] packets;
+    public Operator(int version, int typeID, String bin)
+    {
+        super(version,typeID);
+        packets = bin.charAt(6) == 1 ? elevenBit(bin) : fifteenBit(bin);
+    }
+
+    static Packet[] elevenBit(String bin)
+    {
+
+    }
+    static Packet[] fifteenBit(String bin)
+    {
+
+    }
+}
+
