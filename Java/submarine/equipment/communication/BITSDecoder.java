@@ -175,6 +175,7 @@ class Operator extends Packet
         return sum + version;
     }
 
+    @Override
     public long getValue()
     {
         switch (typeID)
