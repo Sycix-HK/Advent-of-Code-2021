@@ -14,17 +14,13 @@ public class BITSDecoder
     public static void main(String[] args) 
     {
         TimeMeasure timer = new TimeMeasure();
-        Logger.print(timer, "Sum of version numbers", sumOfVersions(DataTray.getInput(16)));
-    }
-
-    public static int sumOfVersions(File file)
-    {
-        try (BufferedReader reader = new BufferedReader(new FileReader(file)))
+        try (BufferedReader reader = new BufferedReader(new FileReader(DataTray.getInput(16))))
         {
             Message m = new Message(reader.readLine());
-            return m.main.versionSum();
+            Logger.print(timer, "Sum of version numbers", m.main.versionSum());
+            Logger.print(timer, "Value of outer packet", m.main.getValue());
         }
-        catch (Exception e) {Logger.error(e);return 0;}
+        catch (Exception e) {Logger.error(e);}
     }
 }
 class Message
@@ -84,6 +80,10 @@ class Packet
     {
         return version;
     }
+    public long getValue()
+    {
+        return 0;
+    }
 }
 
 class Literal extends Packet
@@ -107,6 +107,11 @@ class Literal extends Packet
         outp.len = 6 + i-1;
 
         return outp; 
+    }
+    @Override
+    public long getValue()
+    {
+        return value;
     }
 }
 
@@ -168,6 +173,61 @@ class Operator extends Packet
             sum += packet.versionSum();
         }
         return sum + version;
+    }
+
+    public long getValue()
+    {
+        switch (typeID)
+        {
+            case 0: // sum packet
+                long sum = 0;
+                for (Packet packet : packets) {
+                    sum += packet.getValue();
+                }
+                return sum;
+
+            case 1: // product packet
+                long prod = 1;
+                for (Packet packet : packets) {
+                    prod *= packet.getValue();
+                }
+                return prod;
+
+            case 2: // minimum packet
+                long minval = packets[0].getValue();
+                int minidx = 0;
+                for (int i = 1; i < packets.length; i++) {
+                    long curval = packets[i].getValue();
+                    if (curval < minval) {
+                        minval = curval;
+                        minidx = i;
+                    }
+                }
+                return packets[minidx].getValue();
+
+            case 3: // maximum packet
+                long maxval = packets[0].getValue();
+                int maxidx = 0;
+                for (int i = 1; i < packets.length; i++) {
+                    long curval = packets[i].getValue();
+                    if (curval > maxval) {
+                        maxval = curval;
+                        maxidx = i;
+                    }
+                }
+                return packets[maxidx].getValue();
+
+            case 5: // greater than packet
+                return packets[0].getValue() > packets[1].getValue() ? 1:0;
+
+            case 6: // less than packet
+                return packets[0].getValue() < packets[1].getValue() ? 1:0;
+
+            case 7: // equal to packet
+                return packets[0].getValue() == packets[1].getValue() ? 1:0;
+
+            default: throw new IllegalArgumentException("What the packet doing");
+        }
     }
 }
 
