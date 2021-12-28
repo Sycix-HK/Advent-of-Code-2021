@@ -14,13 +14,27 @@ public class ProbeLauncher {
     public static void main(String[] args) {
         TimeMeasure timer = new TimeMeasure();
         Area area = new Area(DataTray.getInput(17));
-        System.out.println(shoot(6,9,area));
         Logger.print(timer, "Maximum height", getMaximumHeight(area));
+        Logger.print(timer, "Possible shots", bruteforceHits(area));
     }
 
     public static int getMaximumHeight(Area area) {
         int n = Math.abs(area.yStart)-1;
         return (((n*n)+n) / 2);
+    }
+
+    public static int bruteforceHits(Area area)
+    {
+        int sum = 0;
+        for (int Yvel = area.yStart; Yvel < Math.abs(area.yStart); Yvel++)
+        {
+            for (int Xvel = 1; Xvel <= area.xEnd; Xvel++)
+            {
+                sum += shoot(Xvel, Yvel, area) ? 1:0;
+                int d = 0;
+            }
+        }
+        return sum;
     }
 
     public static boolean shoot(int initx, int inity, Area area) {
@@ -31,7 +45,13 @@ public class ProbeLauncher {
             position.add(velocity);
             velocity.decrease();
         }
-        return (position.y >= area.yStart && position.x >= area.xStart && position.x <= area.xEnd);
+        while (position.y >= area.yStart)
+        {
+            if (position.x >= area.xStart && position.x <= area.xEnd) return true;
+            position.add(velocity);
+            velocity.decrease();
+        }
+        return false;
     }
 }
 
